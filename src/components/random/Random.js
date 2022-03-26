@@ -1,17 +1,14 @@
 import './Random.css';
-import Service from '../../services/Service';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import capckec from '../../resources/img/капкейк.jpg';
 import { useEffect, useState } from 'react';
 import Spinner from '../spinner/Spinner';
+import useService from '../../services/Service';
 
 const Random = () => {
 	const [char, setChar] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false)
-
-
-	const service = new Service();
+	
+	const {loading, error, getCake, clearError}=useService();
 
 	useEffect(() => {
 		upDate();
@@ -23,28 +20,16 @@ const Random = () => {
 	}, [])
 
 
-	const onError = () => {
-		setError(true);
-		setLoading(false);
-	}
-
 	const onCharLoaded = (char) => {
-		setLoading(false);
 		setChar(char);
-	}
-
-	const onCharLoading = () => {
-		setLoading(true);
 	}
 
 
 	const upDate = () => {
+		clearError();
 		const id = Math.floor(Math.random() * (17 - 1) + 1);
-		onCharLoading();
-		service
-			.getCake(id)
-			.then(onCharLoaded )
-			.catch(onError);
+		getCake(id)
+			.then(onCharLoaded );
 	}
 
 
