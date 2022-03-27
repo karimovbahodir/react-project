@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/App';
 
+
 import './style/style.css'
 
 
 /* const service= new Service();
 	
-service.getCake(1).then(res=>console.log(res.name)); */
+service.getAllCakes().then(res=>{
+	return res.forEach(element => {
+		console.log(element.id);
+	});
+}); */
 
 ReactDOM.render(
 	<React.StrictMode>
