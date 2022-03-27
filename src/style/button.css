@@ -22,6 +22,7 @@
 	line-height: 18px;
 	padding: 0 18px;
 	transition: none;
+	
 }
 
 .button .inner::before {
@@ -51,7 +52,7 @@
 
 .button__main:hover,
 .button__secondary:hover {
-	color: #fff;
+	color: black;
 }
 
 .button__secondary .inner {

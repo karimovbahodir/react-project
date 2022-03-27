@@ -6,34 +6,35 @@ import Info from "../info/Info";
 import List from "../list/List";
 import Random from "../random/Random";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
+import { ModalProvider } from "../context";
+
 
 
 const App = () => {
 	const [selectedChar, setSelectedChar] = useState(null);
-
-	const onCharSelected = (id) => {
-		setSelectedChar(id);
-	}
+	
 
 
 	return (
-		<div className="app">
-			<Header />
-			<main>
-				<ErrorBoundary>
-					<Random />
-				</ErrorBoundary>
-				<div className="app__content">
+		<ModalProvider>
+			<div className="app">
+				<Header />
+				<main>
 					<ErrorBoundary>
-						<List onCharSelected={onCharSelected} />
+						<Random />
 					</ErrorBoundary>
-					<ErrorBoundary>
-						<Info charId={selectedChar} />
-					</ErrorBoundary>
-				</div>
-			</main>
-			<Footer />
-		</div>
+					<div className="app__content">
+						<ErrorBoundary>
+							<List onCharSelected={(id) => setSelectedChar(id)} />
+						</ErrorBoundary>
+						<ErrorBoundary>
+							<Info charId={selectedChar} />
+						</ErrorBoundary>
+					</div>
+				</main>
+				<Footer />
+			</div>
+		</ModalProvider>
 	);
 }
 

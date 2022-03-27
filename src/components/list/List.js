@@ -9,14 +9,21 @@ const List = (props) => {
 
 	const [charList, setCharList] = useState([]);
 	const [newItemLoading, setNewItemLoading] = useState(false);
-	const [offset, setOffset] = useState(16);
+	const [offset, setOffset] = useState(13);
 	const [charEnded, setCharEnded] = useState(false);
+	const [focus, setFocus]= useState(false);
 
 	const { loading, error, getAllCakes } = useService();
 
 	useEffect(() => {
 		onRequest(offset, true);
 	}, [])
+
+	const clickFocus=()=>{
+		
+			setFocus(!focus);
+		
+	}
 
 	const onRequest = (offset, initial) => {
 		initial ? setNewItemLoading(false) : setNewItemLoading(true);
@@ -27,14 +34,14 @@ const List = (props) => {
 
 	const onCharListLoaded = (newCharList) => {
 		let ended = false;
-		if (newCharList.length < 6) {
+		if (newCharList.length < 3) {
 			ended = true;
 		}
 
 		setCharList(charList => [...charList, ...newCharList]);
-		setNewItemLoading(newItemLoading => false);
+		setNewItemLoading(false);
 		setOffset(offset => offset + 3);
-		setCharEnded(charEnded => ended);
+		setCharEnded(ended);
 	}
 
 	const itemRefs = useRef([]);
@@ -43,8 +50,6 @@ const List = (props) => {
 
 	const focusOnItem = (id) => {
 
-		itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
-		itemRefs.current[id].classList.add('char__item_selected');
 		itemRefs.current[id].focus();
 	}
 
@@ -54,22 +59,22 @@ const List = (props) => {
 
 			return (
 				<li
-					className="char__item"
+					className={focus? "char__item char__item_selected": "char__item"}
 					tabIndex={0}
 					ref={el => itemRefs.current[i] = el}
 					key={item.id}
 					onClick={() => {
 						props.onCharSelected(item.id);
-						focusOnItem(i);
+						focusOnItem(i)
 					}}
 					onKeyPress={(e) => {
 						if (e.key === ' ' || e.key === "Enter") {
 							props.onCharSelected(item.id);
-							focusOnItem(i);
+							
 						}
 					}}>
 					<img src={item.thumbnail} alt={item.name} />
-					<div className="char__name">{item.name}</div>
+					<div className= "char__name ">{item.name}</div>
 				</li>
 			)
 		});
