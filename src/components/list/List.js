@@ -11,7 +11,6 @@ const List = (props) => {
 	const [newItemLoading, setNewItemLoading] = useState(false);
 	const [offset, setOffset] = useState(13);
 	const [charEnded, setCharEnded] = useState(false);
-	const [focus, setFocus]= useState(false);
 
 	const { loading, error, getAllCakes } = useService();
 
@@ -19,11 +18,7 @@ const List = (props) => {
 		onRequest(offset, true);
 	}, [])
 
-	const clickFocus=()=>{
-		
-			setFocus(!focus);
-		
-	}
+	
 
 	const onRequest = (offset, initial) => {
 		initial ? setNewItemLoading(false) : setNewItemLoading(true);
@@ -49,7 +44,6 @@ const List = (props) => {
 
 
 	const focusOnItem = (id) => {
-
 		itemRefs.current[id].focus();
 	}
 
@@ -59,7 +53,7 @@ const List = (props) => {
 
 			return (
 				<li
-					className={focus? "char__item char__item_selected": "char__item"}
+					className="char__item"
 					tabIndex={0}
 					ref={el => itemRefs.current[i] = el}
 					key={item.id}
