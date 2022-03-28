@@ -5,7 +5,7 @@ const useService=()=> {
 
 	
 	const getAllCakes = async () =>{
-		const res= await request("https://623c0cc58e9af587894af58c.mockapi.io/cakes?limit=9");
+		const res= await request("https://623c0cc58e9af587894af58c.mockapi.io/cakes");
 		return res.map(_transformCakes)
 	}
 
