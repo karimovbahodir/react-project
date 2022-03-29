@@ -9,7 +9,6 @@ import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 import { ModalProvider } from "../context";
 
 
-
 const App = () => {
 	const [selectedChar, setSelectedChar] = useState(null);
 	

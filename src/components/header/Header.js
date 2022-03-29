@@ -9,7 +9,10 @@ import ModalPass from "../modalPass/ModalPass";
 const Header = (props) => {
 	const [avatar, setAvatar] = useState(false);
 
+
 	const { openModal, closeModal } = useContext(ModalContext);
+
+	const conditionMail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 
 	const checkOut=()=> {
@@ -18,20 +21,24 @@ const Header = (props) => {
 		handlerWillDone()
 	}
 
-
+	
 	
 
 	const handlerReg = () => {
 		openModal({
 			title: "регистрация",
-			children: <ModalReg checkOut={checkOut} handlerWillDone={handlerWillDone}/>
+			children: <ModalReg checkOut={checkOut} 
+			handlerWillDone={handlerWillDone}
+			conditionMail={conditionMail}
+			/>
 		})
 	}
 
 	const handlerPass = () => {
 		openModal({
 			title: "ВОССТАНОВЛЕНИЕ ПАРОЛЯ",
-			children: <ModalPass closeModal={closeModal}  />
+			children: <ModalPass closeModal={closeModal} 
+			conditionMail={conditionMail}/>
 		})
 	}
 
@@ -39,7 +46,11 @@ const Header = (props) => {
 	const handlerClick = () => {
 		openModal({
 			title: "вход",
-			children: <ModalSigin  handlerReg={ handlerReg} handlerPass={handlerPass} checkOut={checkOut}/>
+			children: <ModalSigin  handlerReg={ handlerReg} 
+			handlerPass={handlerPass} 
+			checkOut={checkOut}
+			conditionMail={conditionMail}
+			/>
 		});
 	}
 

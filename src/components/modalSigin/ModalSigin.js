@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import './ModalSigin.css';
 
 
-const ModalSigin = ({handlerPass, handlerReg, checkOut}) => {
-	const [email, setEmail] = useState('');
+const ModalSigin = ({handlerPass, handlerReg, checkOut, conditionMail}) => {
 	const [pass, setPass] = useState('');
 	const [emailDirty, setEmailDirty] = useState(false);
 	const [passDirty, setPassDirty] = useState(false);
-	const [emailError, setEmailError] = useState('Email не может быть пустым');
 	const [passError, setPassError] = useState('Пароль не может быть пустым');
 	const [formValid, setFormValid]=useState(false);
+	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('Email не может быть пустым');
 
 	useEffect (()=>{
 		if( emailError || passError){
@@ -30,18 +30,17 @@ const ModalSigin = ({handlerPass, handlerReg, checkOut}) => {
 		}
 	}
 
-	
-
-	
 	const onChangeEmail = (e) => {
 		setEmail(e.target.value)
-		const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-		if(!re.test(String(e.target.value).toLowerCase())){
+		if (!conditionMail.test(String(e.target.value).toLowerCase())) {
 			setEmailError('Некорректный email');
-		}else{
+		} else {
 			setEmailError("")
 		}
 	}
+
+	
+	
 
 	const onChangePass = (e) => {
 		setPass(e.target.value)

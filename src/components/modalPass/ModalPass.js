@@ -1,36 +1,34 @@
 import { useState, useEffect } from 'react';
 import './ModalPass.css'
 
-const ModalPass = ({ closeModal }) => {
+const ModalPass = ({ closeModal, conditionMail}) => {
 
-	const [confirmPassword, setConfirmPassword] = useState('');
 	const [confirmPasswordDirty, setConfirmPasswordDirty] = useState(false);
-	const [confirmPasswordError, setConfirmPasswordError] = useState('Email не может быть пустым');
 	const [formValid, setFormValid] = useState(false);
+	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('Email не может быть пустым');
 
 	useEffect(() => {
-		if (confirmPasswordError) {
+		if (emailError) {
 			setFormValid(false)
 		} else {
 			setFormValid(true)
 		}
-	}, [confirmPasswordError])
+	}, [emailError])
 
-	const onChangeCon = (e) => {
-		setConfirmPassword(e.target.value)
-		const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-		if (!re.test(String(e.target.value).toLowerCase())) {
-			setConfirmPasswordError('Некорректный email');
+	const onChangeEmail = (e) => {
+		setEmail(e.target.value)
+		if (!conditionMail.test(String(e.target.value).toLowerCase())) {
+			setEmailError('Некорректный email');
 		} else {
-			setConfirmPasswordError("")
+			setEmailError("")
 		}
 	}
 
+
 	const blurHandler = (e) => {
-		switch (e.target.name) {
-			case "confirmPassword":
+		if (e.target.name==="email") {
 				setConfirmPasswordDirty(true)
-				break
 		}
 	}
 
@@ -40,10 +38,10 @@ const ModalPass = ({ closeModal }) => {
 					<div className="form">
 						<p>Пожалуйста, введите ваш адрес электронной почты, на который мы отправим ссылку для восстановления пароля</p>
 						<div className="input-form">
-							{(confirmPasswordDirty && confirmPasswordError) && <div style={{ color: "red" }}>{confirmPasswordError}</div>}
+							{(confirmPasswordDirty && emailError) && <div style={{ color: "red" }}>{emailError}</div>}
 							<input type="text" name='confirmPassword' placeholder='Введите свой email'
-								value={confirmPassword}
-								onChange={e => onChangeCon(e)}
+								value={email}
+								onChange={e => onChangeEmail(e)}
 								onBlur={e => blurHandler(e)}
 							/>
 						</div>
