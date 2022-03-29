@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import './ModalSigin.css';
 
 
-const ModalSigin = ({handlerPass, handlerReg, checkOut, email, emailError, onChangeEmail}) => {
+const ModalSigin = ({handlerPass, handlerReg, checkOut, conditionMail}) => {
 	const [pass, setPass] = useState('');
 	const [emailDirty, setEmailDirty] = useState(false);
 	const [passDirty, setPassDirty] = useState(false);
 	const [passError, setPassError] = useState('Пароль не может быть пустым');
 	const [formValid, setFormValid]=useState(false);
+	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('Email не может быть пустым');
 
 	useEffect (()=>{
 		if( emailError || passError){
@@ -28,7 +30,14 @@ const ModalSigin = ({handlerPass, handlerReg, checkOut, email, emailError, onCha
 		}
 	}
 
-	
+	const onChangeEmail = (e) => {
+		setEmail(e.target.value)
+		if (!conditionMail.test(String(e.target.value).toLowerCase())) {
+			setEmailError('Некорректный email');
+		} else {
+			setEmailError("")
+		}
+	}
 
 	
 	

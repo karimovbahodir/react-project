@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import './ModalPass.css'
 
-const ModalPass = ({ closeModal, email, emailError, onChangeEmail }) => {
+const ModalPass = ({ closeModal, conditionMail}) => {
 
 	const [confirmPasswordDirty, setConfirmPasswordDirty] = useState(false);
 	const [formValid, setFormValid] = useState(false);
+	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('Email не может быть пустым');
 
 	useEffect(() => {
 		if (emailError) {
@@ -13,6 +15,15 @@ const ModalPass = ({ closeModal, email, emailError, onChangeEmail }) => {
 			setFormValid(true)
 		}
 	}, [emailError])
+
+	const onChangeEmail = (e) => {
+		setEmail(e.target.value)
+		if (!conditionMail.test(String(e.target.value).toLowerCase())) {
+			setEmailError('Некорректный email');
+		} else {
+			setEmailError("")
+		}
+	}
 
 
 	const blurHandler = (e) => {

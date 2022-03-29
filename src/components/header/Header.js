@@ -8,10 +8,11 @@ import ModalPass from "../modalPass/ModalPass";
 
 const Header = (props) => {
 	const [avatar, setAvatar] = useState(false);
-	const [email, setEmail] = useState('');
-	const [emailError, setEmailError] = useState('Email не может быть пустым');
+
 
 	const { openModal, closeModal } = useContext(ModalContext);
+
+	const conditionMail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 
 	const checkOut=()=> {
@@ -20,15 +21,7 @@ const Header = (props) => {
 		handlerWillDone()
 	}
 
-	const onChangeEmail = (e) => {
-		setEmail(e.target.value)
-		const conditionMail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-		if (!conditionMail.test(String(e.target.value).toLowerCase())) {
-			setEmailError('Некорректный email');
-		} else {
-			setEmailError("")
-		}
-	}
+	
 	
 
 	const handlerReg = () => {
@@ -36,9 +29,7 @@ const Header = (props) => {
 			title: "регистрация",
 			children: <ModalReg checkOut={checkOut} 
 			handlerWillDone={handlerWillDone}
-			email={email} 
-			emailError={emailError} 
-			onChangeEmail={(e)=>onChangeEmail(e)}
+			conditionMail={conditionMail}
 			/>
 		})
 	}
@@ -47,9 +38,7 @@ const Header = (props) => {
 		openModal({
 			title: "ВОССТАНОВЛЕНИЕ ПАРОЛЯ",
 			children: <ModalPass closeModal={closeModal} 
-			email={email} 
-			emailError={emailError} 
-			onChangeEmail={(e)=>onChangeEmail(e)} />
+			conditionMail={conditionMail}/>
 		})
 	}
 
@@ -60,9 +49,7 @@ const Header = (props) => {
 			children: <ModalSigin  handlerReg={ handlerReg} 
 			handlerPass={handlerPass} 
 			checkOut={checkOut}
-			email={email} 
-			emailError={emailError} 
-			onChangeEmail={(e)=>onChangeEmail(e)}
+			conditionMail={conditionMail}
 			/>
 		});
 	}

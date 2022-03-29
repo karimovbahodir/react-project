@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './ModalReg.css'
 
-const ModalPass = ({ checkOut, email, emailError, onChangeEmail}) => {
+const ModalPass = ({ checkOut, conditionMail}) => {
 	const [name, setName]=useState('');
 	const [surname, setSurname]=useState('');
 	const [pass, setPass]=useState('');
@@ -9,6 +9,8 @@ const ModalPass = ({ checkOut, email, emailError, onChangeEmail}) => {
 	const [passDirty, setPassDirty] = useState(false);
 	const [passError, setPassError] = useState('Пароль не может быть пустым');
 	const [formValid, setFormValid]=useState(false);
+	const [email, setEmail] = useState('');
+	const [emailError, setEmailError] = useState('Email не может быть пустым');
 
 
 	const onChangeName=(e)=>{
@@ -38,7 +40,14 @@ const ModalPass = ({ checkOut, email, emailError, onChangeEmail}) => {
 		}
 	}
 
-	
+	const onChangeEmail = (e) => {
+		setEmail(e.target.value)
+		if (!conditionMail.test(String(e.target.value).toLowerCase())) {
+			setEmailError('Некорректный email');
+		} else {
+			setEmailError("")
+		}
+	}
 
 	const onChangePass = (e) => {
 		setPass(e.target.value)
